@@ -1,1 +1,1 @@
-web: node server.js $4000
+web: node server.js
