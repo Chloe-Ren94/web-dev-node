@@ -6,7 +6,10 @@ module.exports = (app) => {
     app.get('/api/profile', getCurrentProfile);
 
     const updateCurrentProfile = (req, res) => {
-        profile = req.body;
+        profile = {
+            ...req.body,
+            edit: false
+        };
         res.sendStatus(200);
     }
     app.put('/api/profile', updateCurrentProfile);
