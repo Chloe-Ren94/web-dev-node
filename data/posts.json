@@ -1,6 +1,5 @@
 [
     {
-        "_id": "123",
         "avatarIcon": "/images/musk.jpg",
         "userName": "Elon Musk",
         "verified": true,
@@ -17,7 +16,6 @@
         "liked": false
     },
     {
-        "_id": "234",
         "avatarIcon": "/images/newyork.jpg",
         "userName": "New York Post",
         "verified": true,

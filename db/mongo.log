@@ -1,0 +1,264 @@
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use webdev
+switched to db webdev
+> db.movies.insert({title: 'Aliens', rating: 4.5})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+webdev  0.000GB
+> db.movies.insert({title: 'Terminator', rating: 4.8})
+WriteResult({ "nInserted" : 1 })
+> db.movies.insert({title: 'Avatar', rating: 4.7})
+WriteResult({ "nInserted" : 1 })
+> db.movies.insert({title: 'Dune', rating: 4.9})
+WriteResult({ "nInserted" : 1 })
+> db.movies.find()
+{ "_id" : ObjectId("619b35c1883ae50ad1d9b047"), "title" : "Aliens", "rating" : 4.5 }
+{ "_id" : ObjectId("619b361b883ae50ad1d9b048"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619b3630883ae50ad1d9b049"), "title" : "Avatar", "rating" : 4.7 }
+{ "_id" : ObjectId("619b3645883ae50ad1d9b04a"), "title" : "Dune", "rating" : 4.9 }
+> db.movies.find({_id: ObjectId("619b35c1883ae50ad1d9b047")})
+{ "_id" : ObjectId("619b35c1883ae50ad1d9b047"), "title" : "Aliens", "rating" : 4.5 }
+> db.movies.find({title: "Aliens"})
+{ "_id" : ObjectId("619b35c1883ae50ad1d9b047"), "title" : "Aliens", "rating" : 4.5 }
+> db.movies.find().pretty()
+{
+	"_id" : ObjectId("619b35c1883ae50ad1d9b047"),
+	"title" : "Aliens",
+	"rating" : 4.5
+}
+{
+	"_id" : ObjectId("619b361b883ae50ad1d9b048"),
+	"title" : "Terminator",
+	"rating" : 4.8
+}
+{
+	"_id" : ObjectId("619b3630883ae50ad1d9b049"),
+	"title" : "Avatar",
+	"rating" : 4.7
+}
+{
+	"_id" : ObjectId("619b3645883ae50ad1d9b04a"),
+	"title" : "Dune",
+	"rating" : 4.9
+}
+> db.movies.updateOne({title: 'Avatar'}, {rating: 4.9})
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> db.movies.updateOne({title: 'Avatar'}, {$set: {rating: 4.9}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.movies.updateOne({_id: ObjectId("619b35c1883ae50ad1d9b047")}, {$set: {rating: 4.5}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 0 }
+> db.movies.removeOne({_id: ObjectId("619b35c1883ae50ad1d9b047")})
+uncaught exception: TypeError: db.movies.removeOne is not a function :
+@(shell):1:1
+> db.movies.deleteOne({_id: ObjectId("619b35c1883ae50ad1d9b047")})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.movies.find()
+{ "_id" : ObjectId("619b361b883ae50ad1d9b048"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619b3630883ae50ad1d9b049"), "title" : "Avatar", "rating" : 4.9 }
+{ "_id" : ObjectId("619b3645883ae50ad1d9b04a"), "title" : "Dune", "rating" : 4.9 }
+
+
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+webdev  0.000GB
+> use webdev
+switched to db webdev
+> db.tweets.insert({
+...         "avatarIcon": "/images/musk.jpg",
+...         "userName": "Elon Musk",
+...         "verified": true,
+...         "handle": "elonmusk",
+...         "time": "23h",
+...         "tweet": "Amazing show about <a class=\"text-decoration-none\" href='@inspiration4x'>@Inspiration4x</a> mission!",
+...         "image": "/images/musk_tweet.jpg",
+...         "title": "Countdown: Inspiration4 Mission to Space | Netflix Official Site",
+...         "text": "From training to launch to landing, this all-access docuseries rides along with the Inspiration4 crew on the first all-civilian orbital space mission.",
+...         "link": "netflix.com",
+...         "reply": 4200,
+...         "retweet": 3500,
+...         "like": 37500,
+...         "liked": false
+...     });
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert({
+...         "avatarIcon": "/images/newyork.jpg",
+...         "userName": "New York Post",
+...         "verified": true,
+...         "handle": "nypost",
+...         "time": "23h",
+...         "tweet": "Grimes seen reading Karl Marx following split with world's richest man Elon Musk <a href=\"https://trib.al/nx2Gfaq\" class=\"text-decoration-none\">trib.al/nx2Gfaq</a>",
+...         "image": "/images/newyork_tweet.jpg",
+...         "title": "",
+...         "text": "",
+...         "link": "",
+...         "reply": 965,
+...         "retweet": 2400,
+...         "like": 4000,
+...         "liked": false
+...     });
+WriteResult({ "nInserted" : 1 })
+> db.tweets.find().pretty()
+{
+	"_id" : ObjectId("61a69dc63b1b7b61483569a0"),
+	"avatarIcon" : "/images/musk.jpg",
+	"userName" : "Elon Musk",
+	"verified" : true,
+	"handle" : "elonmusk",
+	"time" : "23h",
+	"tweet" : "Amazing show about <a class=\"text-decoration-none\" href='@inspiration4x'>@Inspiration4x</a> mission!",
+	"image" : "/images/musk_tweet.jpg",
+	"title" : "Countdown: Inspiration4 Mission to Space | Netflix Official Site",
+	"text" : "From training to launch to landing, this all-access docuseries rides along with the Inspiration4 crew on the first all-civilian orbital space mission.",
+	"link" : "netflix.com",
+	"reply" : 4200,
+	"retweet" : 3500,
+	"like" : 37500,
+	"liked" : false
+}
+{
+	"_id" : ObjectId("61a69dda3b1b7b61483569a1"),
+	"avatarIcon" : "/images/newyork.jpg",
+	"userName" : "New York Post",
+	"verified" : true,
+	"handle" : "nypost",
+	"time" : "23h",
+	"tweet" : "Grimes seen reading Karl Marx following split with world's richest man Elon Musk <a href=\"https://trib.al/nx2Gfaq\" class=\"text-decoration-none\">trib.al/nx2Gfaq</a>",
+	"image" : "/images/newyork_tweet.jpg",
+	"title" : "",
+	"text" : "",
+	"link" : "",
+	"reply" : 965,
+	"retweet" : 2400,
+	"like" : 4000,
+	"liked" : false
+}
+> show collections
+movies
+tweets
+
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+webdev  0.000GB
+> use webdev
+switched to db webdev
+> db.who.insert({
+...         "avatarIcon": "/images/java.png",
+...         "userName": "Java",
+...         "handle": "Java"
+...     });
+WriteResult({ "nInserted" : 1 })
+> db.who.insert({
+...         "avatarIcon": "/images/relativity.jpg",
+...         "userName": "Relativity Space",
+...         "handle": "relativityspace"
+...     });
+WriteResult({ "nInserted" : 1 })
+> db.who.insert({
+...         "avatarIcon": "/images/virgin.svg",
+...         "userName": "Virgin Galactic",
+...         "handle": "virgingalactic"
+...     });
+WriteResult({ "nInserted" : 1 })
+> db.who.insert({
+...         "avatarIcon": "/images/nasa.jpg",
+...         "userName": "NASA",
+...         "handle": "NASA"
+...     });
+WriteResult({ "nInserted" : 1 })
+> db.who.insert({
+...         "avatarIcon": "/images/tesla.png",
+...         "userName": "Tesla",
+...         "handle": "Tesla"
+...     });
+WriteResult({ "nInserted" : 1 })
+> db.who.find().pretty()
+{
+	"_id" : ObjectId("61a6bb893b1b7b61483569a2"),
+	"avatarIcon" : "/images/java.png",
+	"userName" : "Java",
+	"handle" : "Java"
+}
+{
+	"_id" : ObjectId("61a6bba23b1b7b61483569a3"),
+	"avatarIcon" : "/images/relativity.jpg",
+	"userName" : "Relativity Space",
+	"handle" : "relativityspace"
+}
+{
+	"_id" : ObjectId("61a6bbaf3b1b7b61483569a4"),
+	"avatarIcon" : "/images/virgin.svg",
+	"userName" : "Virgin Galactic",
+	"handle" : "virgingalactic"
+}
+{
+	"_id" : ObjectId("61a6bbc03b1b7b61483569a5"),
+	"avatarIcon" : "/images/nasa.jpg",
+	"userName" : "NASA",
+	"handle" : "NASA"
+}
+{
+	"_id" : ObjectId("61a6bbcf3b1b7b61483569a6"),
+	"avatarIcon" : "/images/tesla.png",
+	"userName" : "Tesla",
+	"handle" : "Tesla"
+}
+> show collections
+movies
+tweets
+who
+
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+webdev  0.000GB
+> use webdev
+switched to db webdev
+> db.profiles.insert({
+...   "name": "Ice Bear", "handle": "icebear",
+...   "tweets": 1984,
+...   "profilePicture": "/images/profile.png",
+...   "bannerPicture": "/images/banner.jpg",
+...   "bio": "Looking for rich European women at the edge of the world",
+...   "location": "Zurich, Switzerland", "website": "", "dateOfBirth": "6/4/1989", "dateJoined": "1/2019",
+...   "followingCount": 312, "followersCount": 180,
+...   "edit": false
+... });
+WriteResult({ "nInserted" : 1 })
+> db.profiles.find().pretty()
+{
+	"_id" : ObjectId("61a6c0d33b1b7b61483569a7"),
+	"name" : "Ice Bear",
+	"handle" : "icebear",
+	"tweets" : 1984,
+	"profilePicture" : "/images/profile.png",
+	"bannerPicture" : "/images/banner.jpg",
+	"bio" : "Looking for rich European women at the edge of the world",
+	"location" : "Zurich, Switzerland",
+	"website" : "",
+	"dateOfBirth" : "6/4/1989",
+	"dateJoined" : "1/2019",
+	"followingCount" : 312,
+	"followersCount" : 180,
+	"edit" : false
+}
+> show collections
+movies
+profiles
+tweets
+who
